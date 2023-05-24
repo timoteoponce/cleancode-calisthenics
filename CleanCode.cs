@@ -1,3 +1,11 @@
+/*
+== Clean code calisthenics
+1. Don't use single letters as variable names
+2. Name variables and methods names in a meaningful way
+3. At most 2 levels of indentation per method
+4. One dot per line
+5. Keep all methods short, maximum of 7 lines
+*/
 // This is a representation of a car piece or part
 public class CarPart {
     public string id { get; set; }
