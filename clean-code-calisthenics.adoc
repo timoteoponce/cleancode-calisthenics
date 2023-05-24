@@ -1,0 +1,85 @@
+= Clean code
+
+Clean code is a mindset, above everything it must achieve the goal of being flexible enough to be changed in the future.
+
+IMPORTANT: Above all, we must write code that is simple to read and change
+
+An example of non clean code:
+
+[source,c#]
+----
+// This is a representation of a car piece or part
+public class O_P {
+    public string m_id { get; set; }
+    public string m_dsc { get; set; }
+    public string m_cst { get; set; }
+
+    public void f32(int v) {
+        this.m_cst = this.m_cst + v;
+    }
+}
+
+// This is a representation of a car
+public class O_C {
+    public string m_mdl { get; set; }
+    public string m_brd { get; set; }
+    public List<O_P> m_prt = new List<O_P>();
+
+    // add a part if it's not present
+    public void f33(O_P p) {
+        var p2 = this.m_prt.Find( t => t.m_id == p.m_id);
+        if (p2 == null) {
+            this.m_prt.Add(p2);
+        }
+    }
+}
+----
+
+This is non-readable code, we don't know what it does nor how to change it. But we have the following rules that we can use to clean it.
+
+== Clean code calisthenics
+
+1. Don't use single letters as variable names
+2. Name variables and methods names in a meaningful way
+3. At most 2 levels of indentation per method
+4. One dot per line
+5. Keep all methods short, maximum of 7 lines
+
+Applying the first rule we have:
+[source,c#]
+----
+// This is a representation of a car piece or part
+public class CarPart {
+    public string id { get; set; }
+    public string description { get; set; }
+    public string cost { get; set; }
+
+    public void increaseCost(int additionaCost) {
+        cost = cost + additionaCost;
+    }
+}
+
+// This is a representation of a car
+public class Car {
+    public string model { get; set; }
+    public string brand { get; set; }
+    public List<CarPart> parts = new List<CarPart>();
+
+    // add a part if it's not present
+    public void addPart(CarPart part) {
+        var existingPart = FindPart(part);
+        if (existingPart == null) {
+            parts.Add(part);
+        }
+    }
+
+    private CarPart? FindPart(CarPart part) {
+        foreach (var current in parts){
+            if (Object.Equals(current, part)) {
+                return current;
+            }
+        }
+        return null;
+    }
+}
+----
